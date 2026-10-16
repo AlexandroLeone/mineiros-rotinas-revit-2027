@@ -1,0 +1,188 @@
+<Window x:Class="MineirosRotinas.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="BIM Rotinas · Rotinas de Projeto" Width="1550" Height="920" MinWidth="1080" MinHeight="640" Background="#F7F9FC" FontFamily="Segoe UI" FontSize="12" WindowStartupLocation="CenterOwner" Closing="OnClosing" UseLayoutRounding="True" SnapsToDevicePixels="True">
+<Window.Resources>
+ <Style TargetType="TextBlock"><Setter Property="Foreground" Value="#142440"/><Setter Property="TextWrapping" Value="Wrap"/></Style>
+ <Style TargetType="Button"><Setter Property="Padding" Value="9,5"/><Setter Property="MinHeight" Value="28"/><Setter Property="Background" Value="White"/><Setter Property="Foreground" Value="#00439F"/><Setter Property="BorderBrush" Value="#8AB9F4"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Cursor" Value="Hand"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="VerticalContentAlignment" Value="Center"/>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border x:Name="Chrome" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Chrome" Property="Opacity" Value="0.82"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="Chrome" Property="Opacity" Value="0.46"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+ </Style>
+ <Style x:Key="Primary" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Background"><Setter.Value><LinearGradientBrush StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#0982E9" Offset="0"/><GradientStop Color="#0063CD" Offset="1"/></LinearGradientBrush></Setter.Value></Setter><Setter Property="Foreground" Value="White"/><Setter Property="BorderBrush" Value="#0571D5"/></Style>
+ <Style TargetType="TextBox"><Setter Property="Padding" Value="6"/><Setter Property="Margin" Value="0,3,0,9"/><Setter Property="BorderBrush" Value="#C4CFDF"/><Setter Property="Background" Value="White"/></Style>
+ <Style TargetType="ComboBox"><Setter Property="MinHeight" Value="26"/><Setter Property="Margin" Value="0,2,0,4"/><Setter Property="VerticalContentAlignment" Value="Center"/><Setter Property="FontSize" Value="11"/></Style>
+ <Style TargetType="CheckBox"><Setter Property="Margin" Value="0,3,5,3"/><Setter Property="VerticalContentAlignment" Value="Center"/><Setter Property="FontSize" Value="11"/></Style>
+ <Style TargetType="DataGrid"><Setter Property="Background" Value="White"/><Setter Property="BorderBrush" Value="#DCE3EC"/><Setter Property="AutoGenerateColumns" Value="False"/><Setter Property="CanUserAddRows" Value="False"/><Setter Property="CanUserDeleteRows" Value="False"/><Setter Property="HeadersVisibility" Value="Column"/><Setter Property="RowHeaderWidth" Value="0"/></Style>
+ <Style x:Key="Heading" TargetType="TextBlock"><Setter Property="FontSize" Value="20"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Margin" Value="0,0,0,10"/></Style>
+ <Style x:Key="Hint" TargetType="TextBlock"><Setter Property="Foreground" Value="#67798F"/><Setter Property="Margin" Value="0,4,0,12"/></Style>
+ <Style x:Key="Card" TargetType="Border"><Setter Property="CornerRadius" Value="5"/><Setter Property="Background" Value="White"/><Setter Property="BorderBrush" Value="#D4DFEC"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="11,5"/></Style>
+ <Style x:Key="CardTitle" TargetType="TextBlock"><Setter Property="Foreground" Value="#002464"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="FontSize" Value="14"/><Setter Property="Margin" Value="0,0,0,3"/></Style>
+ <Style x:Key="TopTab" TargetType="RadioButton"><Setter Property="GroupName" Value="TopTabs"/><Setter Property="Padding" Value="14,6"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="RadioButton"><Border x:Name="TabBorder" BorderThickness="0,0,0,2" BorderBrush="Transparent" Padding="{TemplateBinding Padding}"><ContentPresenter/></Border><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter Property="Foreground" Value="#0059CC"/><Setter Property="FontWeight" Value="SemiBold"/><Setter TargetName="TabBorder" Property="BorderBrush" Value="#087AFF"/><Setter TargetName="TabBorder" Property="Background" Value="White"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+ <Style x:Key="Step" TargetType="ListBoxItem"><Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="Padding" Value="0"/><Setter Property="Margin" Value="0,0,0,1"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><Border x:Name="Row" CornerRadius="4" Padding="12,0" Background="Transparent" Height="44"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="35"/><ColumnDefinition Width="*"/><ColumnDefinition Width="21"/></Grid.ColumnDefinitions>
+ <Border x:Name="NumberCircle" Width="29" Height="29" CornerRadius="15" BorderBrush="#B9C5D2" BorderThickness="1" Background="#F4F7FA" HorizontalAlignment="Left"><TextBlock x:Name="NumberText" Text="{Binding Number}" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+ <TextBlock Grid.Column="1" Text="{Binding Title}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12"/>
+ <TextBlock x:Name="StepState" Grid.Column="2" Text="{Binding Mark}" Foreground="{Binding MarkColor}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+ </Grid></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter TargetName="Row" Property="Background" Value="#BBDDFF"/><Setter TargetName="NumberCircle" Property="Background" Value="#006CE0"/><Setter TargetName="NumberCircle" Property="BorderBrush" Value="#006CE0"/><Setter TargetName="NumberText" Property="Foreground" Value="White"/><Setter TargetName="StepState" Property="Text" Value="›"/><Setter TargetName="StepState" Property="Foreground" Value="#004184"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Row" Property="Opacity" Value="0.82"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+</Window.Resources>
+<Grid>
+ <Grid.RowDefinitions><RowDefinition Height="48"/><RowDefinition Height="*"/><RowDefinition Height="70"/></Grid.RowDefinitions>
+ <Border Padding="18,0" BorderBrush="#A8BCCF" BorderThickness="0,0,0,1"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,0"><GradientStop Color="#163750"/><GradientStop Color="#234764" Offset="1"/></LinearGradientBrush></Border.Background>
+  <DockPanel LastChildFill="True"><StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center"><Button Content="↻" ToolTip="Atualizar modelo e prévias" Click="RefreshClick" Margin="8,0" Width="32" Padding="0"/><Button Content="Abrir BIM Copiloto ↗" Click="CopilotoClick" FontWeight="SemiBold" Padding="11,5"/></StackPanel>
+  <StackPanel Orientation="Horizontal" VerticalAlignment="Center"><TextBlock Text="Rotinas de Projeto" FontSize="23" FontWeight="SemiBold" Foreground="White"/><Border Background="#F8B644" CornerRadius="3" Padding="8,3" Margin="14,0,20,0" VerticalAlignment="Center"><TextBlock Text="BIM ROTINAS" FontSize="10" FontWeight="SemiBold" Foreground="#4F3504"/></Border><TextBlock x:Name="ProjectLabel" Text="Modelo aberto" Foreground="White" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" MaxWidth="420"/></StackPanel></DockPanel>
+ </Border>
+ <Grid Grid.Row="1">
+  <Grid.ColumnDefinitions><ColumnDefinition Width="230"/><ColumnDefinition Width="*"/><ColumnDefinition Width="354"/></Grid.ColumnDefinitions>
+  <Border BorderBrush="#D8E0E9" BorderThickness="0,0,1,0" Background="#F4F8FB"><DockPanel>
+   <Border DockPanel.Dock="Bottom" Margin="12,8,12,9" Padding="6,10,0,0" BorderBrush="#D9E2EB" BorderThickness="0,1,0,0"><StackPanel><TextBlock x:Name="ClientLabel" Text="Cliente: não cadastrado" FontSize="11"/><TextBlock x:Name="RevisionLabel" Text="Revisão: R00" FontSize="11" Margin="0,4,0,0"/></StackPanel></Border>
+   <ListBox x:Name="Navigation" BorderThickness="0" Background="Transparent" ItemContainerStyle="{StaticResource Step}" SelectionChanged="Navigate" Margin="0,8,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+  </DockPanel></Border>
+  <Grid Grid.Column="1" Margin="7,0,7,6">
+   <Grid.RowDefinitions><RowDefinition Height="29"/><RowDefinition Height="*"/><RowDefinition Height="120"/></Grid.RowDefinitions>
+   <Border BorderBrush="#CBD6E3" BorderThickness="0,0,0,1" Background="#ECF1F6"><StackPanel Orientation="Horizontal"><RadioButton x:Name="RoutineTab" Content="Rotinas" Style="{StaticResource TopTab}" IsChecked="True" Click="DashboardClick"/><RadioButton x:Name="LocationTab" Content="Localização DWG" Style="{StaticResource TopTab}" Click="MapNavClick"/><RadioButton x:Name="SheetTab" Content="Pranchas" Style="{StaticResource TopTab}" Click="SheetsNavClick"/><RadioButton x:Name="HistoryTab" Content="Histórico" Style="{StaticResource TopTab}" Click="HistoryNavClick"/></StackPanel></Border>
+   <Border Grid.Row="1" Style="{StaticResource Card}" Padding="9,7" Margin="0,5,0,0">
+    <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+     <DockPanel Margin="0,0,0,6"><TextBlock x:Name="ScaleLabel" DockPanel.Dock="Right" Text="Escala: —" FontSize="11" VerticalAlignment="Center" Margin="10,0,0,0"/><TextBlock Text="Prévia da vista selecionada" FontWeight="SemiBold" Foreground="#002464" FontSize="13" VerticalAlignment="Center"/><ComboBox x:Name="PreviewView" DisplayMemberPath="Name" SelectionChanged="PreviewSelectionChanged" Width="205" HorizontalAlignment="Right" Margin="10,0,0,0" MinHeight="24"/></DockPanel>
+     <Border x:Name="PreviewFrame" Grid.Row="1" BorderBrush="#E0E7F0" BorderThickness="1" CornerRadius="3" Background="White" ClipToBounds="True">
+      <Grid><Image x:Name="PreviewImage" Stretch="Uniform" Margin="6" RenderTransformOrigin="0.5,0.5" MouseWheel="PreviewZoomWheel" MouseLeftButtonDown="PreviewPanStart" MouseMove="PreviewPanMove" MouseLeftButtonUp="PreviewPanEnd" Cursor="SizeAll"><Image.RenderTransform><TransformGroup><ScaleTransform x:Name="PreviewZoom"/><TranslateTransform x:Name="PreviewPan"/></TransformGroup></Image.RenderTransform></Image><TextBlock x:Name="PreviewHint" Text="Carregando a prévia real do projeto aberto…" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30" Foreground="#728398" TextAlignment="Center"/>
+       <Border VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="#EFFFFFFF" CornerRadius="3" Margin="8" Padding="2"><StackPanel Orientation="Horizontal"><Button Content="−" Tag="0.8" Click="ZoomClick" Width="26" Padding="0" Margin="0,0,3,0"/><Button Content="Ajustar" Tag="0" Click="ZoomClick" Padding="5,3" FontSize="10" Margin="0,0,3,0"/><Button Content="+" Tag="1.25" Click="ZoomClick" Width="26" Padding="0"/></StackPanel></Border><Border VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#EFFFFFFF" CornerRadius="3" Margin="8" Padding="2"><StackPanel Orientation="Horizontal"><Button Content="Abrir no Revit" Click="OpenViewClick" Padding="7,3" FontSize="10" Margin="0,0,4,0"/><Button Content="↻" Click="PreviewClick" ToolTip="Atualizar prévia" Width="26" Padding="0"/></StackPanel></Border>
+      </Grid></Border>
+    </Grid>
+   </Border>
+   <Border Grid.Row="2" Style="{StaticResource Card}" Padding="8,5,8,7" Margin="0,5,0,0"><DockPanel><TextBlock DockPanel.Dock="Top" Text="Conteúdo das pranchas" Foreground="#002464" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,5"/>
+    <ItemsControl x:Name="ThumbnailList"><ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate>
+     <Button Click="ThumbnailClick" Tag="{Binding}" Margin="0,0,6,0" Padding="5" ToolTip="{Binding ViewName}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"><Button.Style><Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="BorderBrush" Value="#D6DFEA"/><Style.Triggers><DataTrigger Binding="{Binding Selected}" Value="True"><Setter Property="BorderBrush" Value="#167EFF"/><Setter Property="BorderThickness" Value="2"/><Setter Property="Foreground" Value="#004CC3"/></DataTrigger></Style.Triggers></Style></Button.Style>
+      <Grid><Grid.RowDefinitions><RowDefinition/><RowDefinition Height="22"/></Grid.RowDefinitions><Image Source="{Binding Preview}" Stretch="Uniform"/><TextBlock Text="{Binding Placeholder}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="#8A99AA" TextAlignment="Center"/><TextBlock Grid.Row="1" Text="{Binding Title}" FontSize="10" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Bottom"/></Grid>
+     </Button></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+   </DockPanel></Border>
+   <Border x:Name="RoutineOverlay" Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource Card}" Padding="0" Margin="0,5,0,0" Visibility="Collapsed" Panel.ZIndex="10">
+    <DockPanel><Border DockPanel.Dock="Top" Background="#EEF5FD" Padding="12,7" BorderBrush="#D5E3F2" BorderThickness="0,0,0,1"><DockPanel><Button DockPanel.Dock="Right" Content="Voltar à prévia  ×" Click="DashboardClick" Padding="8,3"/><TextBlock x:Name="OverlayTitle" Text="Rotinas de projeto" Foreground="#163F70" VerticalAlignment="Center" FontWeight="SemiBold"/></DockPanel></Border>
+   <TabControl x:Name="Pages" BorderThickness="0" Background="White" Margin="16,10,16,14"><TabControl.Template><ControlTemplate TargetType="TabControl"><ContentPresenter ContentSource="SelectedContent"/></ControlTemplate></TabControl.Template>
+    <TabControl.Resources><Style TargetType="TabItem"><Setter Property="Visibility" Value="Collapsed"/></Style></TabControl.Resources>
+    <TabItem Header="Cadastro"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel x:Name="CadastroPanel">
+     <TextBlock Text="Cadastro do imóvel" Style="{StaticResource Heading}"/>
+     <TextBlock Text="Dados do projeto aberto. Preenchem os parâmetros de projeto utilizados nos carimbos." Style="{StaticResource Hint}"/>
+     <TextBlock Text="Nome do cliente *"/><TextBox x:Name="ClientBox"/>
+     <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><StackPanel Margin="0,0,10,0"><TextBlock Text="Código do projeto *"/><TextBox x:Name="CodeBox"/></StackPanel><StackPanel Grid.Column="1"><TextBlock Text="Revisão"/><TextBox x:Name="RevisionBox" Text="R00"/></StackPanel></Grid>
+     <TextBlock Text="Nome do projeto"/><TextBox x:Name="ProjectBox"/>
+     <TextBlock Text="Endereço"/><TextBox x:Name="AddressBox"/>
+     <TextBlock Text="Bairro"/><TextBox x:Name="DistrictBox"/>
+     <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><StackPanel Margin="0,0,10,0"><TextBlock Text="Quadra"/><TextBox x:Name="BlockBox"/></StackPanel><StackPanel Grid.Column="1" Margin="0,0,10,0"><TextBlock Text="Lote"/><TextBox x:Name="LotBox"/></StackPanel><StackPanel Grid.Column="2"><TextBlock Text="Área terreno (m²)"/><TextBox x:Name="AreaBox" Text="0"/></StackPanel></Grid>
+     <TextBlock Text="Matrícula / inscrição municipal"/><TextBox x:Name="RegistryBox"/>
+     <TextBlock Text="Responsável técnico"/><TextBox x:Name="TechnicianBox"/>
+     <TextBlock Text="ART / RRT"/><TextBox x:Name="ArtBox"/>
+     <TextBlock Text="Pasta-base dos projetos"/><TextBox x:Name="BaseFolderBox"/>
+     <Button Content="Salvar cadastro no modelo" Click="SaveClientClick" Style="{StaticResource Primary}"/>
+    </StackPanel></ScrollViewer></TabItem>
+    <TabItem Header="Cortes"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="Cortes na planta baixa" Style="{StaticResource Heading}"/>
+     <TextBlock Text="A, B e C são cortes arquitetônicos. Escolha a planta e defina as linhas ou gere posições iniciais pelo modelo." Style="{StaticResource Hint}"/>
+     <TextBlock Text="Planta de origem"/><ComboBox x:Name="CutView" DisplayMemberPath="Label"/>
+     <TextBlock Text="Altura acima do nível (m)"/><TextBox x:Name="CutHeight" Text="6"/>
+     <TextBlock Text="Profundidade de observação (m)"/><TextBox x:Name="CutDepth" Text="30"/>
+     <TextBlock Text="Escala 1:"/><TextBox x:Name="CutScale" Text="50"/>
+     <Button Content="Marcar linhas A, B e C na planta" Click="ManualCutsClick" Style="{StaticResource Primary}"/>
+     <Button Content="Gerar cortes inteligentes A, B e C" Click="AutoCutsClick"/>
+     <TextBlock Text="A rotina usa o tipo Corte XX (marcador somente com letras). A fica no eixo vertical central; B e C ficam em linhas horizontais inteligentes. A linha de corte é criada para não poluir a planta; revise o resultado no Revit." Style="{StaticResource Hint}"/>
+     <Separator Margin="0,15"/><TextBlock Text="Fachadas" FontSize="18" FontWeight="SemiBold"/>
+     <Button Content="Gerar quatro fachadas do modelo" Click="FacadesClick"/>
+     <TextBlock Text="Revise enquadramento e identificação de cada fachada antes de posicionar nas pranchas." Style="{StaticResource Hint}"/>
+    </StackPanel></ScrollViewer></TabItem>
+    <TabItem Header="Pranchas"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <StackPanel><TextBlock Text="Atualizar pranchas" Style="{StaticResource Heading}"/><TextBlock Text="Selecione planta baixa, cortes, fachadas, cobertura e localização. Vistas já posicionadas mantêm sua posição e atualização nativa." Style="{StaticResource Hint}"/></StackPanel>
+     <DataGrid x:Name="ViewsGrid" Grid.Row="1"><DataGrid.Columns><DataGridCheckBoxColumn Header="Usar" Binding="{Binding Include,UpdateSourceTrigger=PropertyChanged}"/><DataGridTextColumn Header="Vista" Binding="{Binding Name}" Width="*" IsReadOnly="True"/><DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" IsReadOnly="True"/></DataGrid.Columns></DataGrid>
+     <StackPanel Grid.Row="2" Margin="0,12,0,0"><TextBlock Text="Carimbo carregado"/><ComboBox x:Name="TitleBlockBox" DisplayMemberPath="Name"/><TextBlock Text="Destino"/><ComboBox x:Name="DestinationSheet" DisplayMemberPath="Name"/><Button Content="Atualizar conjunto de pranchas" Click="SheetsClick" Style="{StaticResource Primary}"/><TextBlock Text="Novas folhas: uma por vista. Em folha existente, usa espaço livre; não muda escala nem remove conteúdo. Reserve a revisão de títulos e carimbo." Style="{StaticResource Hint}"/></StackPanel>
+    </Grid></TabItem>
+    <TabItem Header="Checklist"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <StackPanel><TextBlock Text="Checklist automático" Style="{StaticResource Heading}"/><TextBlock Text="Verificações documentais e do modelo. Os itens manuais ficam visíveis para a revisão profissional." Style="{StaticResource Hint}"/></StackPanel>
+     <DataGrid x:Name="ChecklistGrid" Grid.Row="1" IsReadOnly="True"><DataGrid.Columns><DataGridTextColumn Header="Situação" Binding="{Binding Status}" Width="85"/><DataGridTextColumn Header="Item" Binding="{Binding Item}" Width="140"/><DataGridTextColumn Header="Observação" Binding="{Binding Detail}" Width="*"><DataGridTextColumn.ElementStyle><Style TargetType="TextBlock"><Setter Property="TextWrapping" Value="Wrap"/></Style></DataGridTextColumn.ElementStyle></DataGridTextColumn></DataGrid.Columns></DataGrid>
+     <Button Grid.Row="2" Content="Varrer modelo e atualizar checklist" Click="ChecklistClick" Style="{StaticResource Primary}"/>
+    </Grid></TabItem>
+    <TabItem Header="Cotas"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+<StackPanel><TextBlock Text="Revisar propostas de cotas" Style="{StaticResource Heading}"/><TextBlock Text="Marque as referências que deseja aplicar. Os controles de varredura permanecem à direita." Style="{StaticResource Hint}"/><StackPanel Orientation="Horizontal"><TextBlock Text="Afastamento no papel (mm)" VerticalAlignment="Center"/><TextBox x:Name="OffsetBox" Text="8" Width="65" Margin="10,0,0,8"/></StackPanel></StackPanel>
+<DataGrid x:Name="DimensionGrid" Grid.Row="1"><DataGrid.Columns><DataGridCheckBoxColumn Header="Usar" Binding="{Binding Include,UpdateSourceTrigger=PropertyChanged}"/><DataGridTextColumn Header="Proposta" Binding="{Binding Description}" Width="*" IsReadOnly="True"/><DataGridTextColumn Header="Validação" Binding="{Binding Status}" Width="180" IsReadOnly="True"/></DataGrid.Columns></DataGrid>
+<TextBlock Grid.Row="2" Text="Referência válida não dispensa revisão de posição, legibilidade e atendimento às exigências do imóvel." Style="{StaticResource Hint}" Margin="0,12,0,0"/>
+</Grid></TabItem>
+    <TabItem Header="Legendas"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+<StackPanel><TextBlock Text="Revisar propostas de legendas" Style="{StaticResource Heading}"/><TextBlock Text="Identificadores com famílias já carregadas. Use os controles à direita para varrer a vista." Style="{StaticResource Hint}"/></StackPanel>
+<DataGrid x:Name="TagGrid" Grid.Row="1"><DataGrid.Columns><DataGridCheckBoxColumn Header="Usar" Binding="{Binding Include,UpdateSourceTrigger=PropertyChanged}"/><DataGridTextColumn Header="Identificador" Binding="{Binding Description}" Width="*" IsReadOnly="True"/><DataGridTextColumn Header="Validação" Binding="{Binding Status}" Width="180" IsReadOnly="True"/></DataGrid.Columns></DataGrid>
+<Button x:Name="ApplyTagsButton" Grid.Row="2" Content="Aplicar legendas selecionadas" Click="ApplyTagsClick" IsEnabled="False" Style="{StaticResource Primary}" Margin="0,12,0,0"/>
+</Grid></TabItem>
+    <TabItem Header="Revisão"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="Revisão profissional" Style="{StaticResource Heading}"/><TextBlock Text="Revise as vistas e pranchas no Revit. A liberação vale para o estado atual do modelo, nesta sessão, e as pranchas selecionadas para emissão. Reabrir ou alterar o projeto exige nova revisão." Style="{StaticResource Hint}"/>
+     <TextBlock Text="Revisado por"/><TextBox x:Name="ReviewerBox"/>
+     <CheckBox x:Name="ReviewConfirm" Content="Conferi plantas, cortes, fachadas, cotas e localização."/>
+     <Button Content="Registrar revisão para emissão" Click="ReviewClick" Style="{StaticResource Primary}"/>
+     <TextBlock x:Name="ReviewLabel" Margin="0,18,0,0"/>
+     <Button Content="Escolher pranchas para emitir →" Click="PdfNavClick"/>
+    </StackPanel></ScrollViewer></TabItem>
+    <TabItem Header="PDF"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <StackPanel><TextBlock Text="Emitir todas as pranchas" Style="{StaticResource Heading}"/><TextBlock Text="As folhas marcadas serão combinadas em um único PDF, na ordem do número da prancha. Cada emissão recebe uma pasta exclusiva." Style="{StaticResource Hint}"/><WrapPanel><Button Content="Selecionar todas" Click="SelectAllSheetsClick"/><Button Content="Revisão profissional" Click="ReviewNavClick"/></WrapPanel></StackPanel>
+     <DataGrid x:Name="PdfGrid" Grid.Row="1"><DataGrid.Columns><DataGridCheckBoxColumn Header="Emitir" Binding="{Binding Include,UpdateSourceTrigger=PropertyChanged}"/><DataGridTextColumn Header="Prancha" Binding="{Binding Name}" Width="*" IsReadOnly="True"/></DataGrid.Columns></DataGrid>
+     <StackPanel Grid.Row="2"><Button Content="Emitir PDF do conjunto revisado" Click="ExportClick" Style="{StaticResource Primary}"/><TextBlock Text="O cadastro e o registro de emissão acompanham o PDF. O arquivo RVT/RTE não é salvo automaticamente." Style="{StaticResource Hint}"/></StackPanel>
+    </Grid></TabItem>
+    <TabItem Header="Pasta"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="Pasta do cliente" Style="{StaticResource Heading}"/>
+     <TextBlock x:Name="FolderLabel" Style="{StaticResource Hint}"/>
+     <TextBlock Text="Cliente / Código do projeto" FontSize="18" FontWeight="SemiBold"/>
+     <TextBlock Text="00_Cadastro&#10;01_Modelo&#10;02_Pranchas&#10;03_PDF&#10;04_Protocolo&#10;05_Aprovado" LineHeight="28" Margin="14,16"/>
+     <TextBlock Text="O código diferencia vários projetos do mesmo cliente. PDFs e protocolos anteriores nunca são sobrescritos." Style="{StaticResource Hint}"/>
+     <Button Content="Criar estrutura de pastas" Click="FoldersClick" Style="{StaticResource Primary}"/>
+     <Button Content="Abrir pasta do projeto" Click="OpenFolderClick"/>
+    </StackPanel></ScrollViewer></TabItem>
+    <TabItem Header="Protocolo"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="Versão protocolada" Style="{StaticResource Heading}"/><TextBlock Text="Selecione o PDF emitido e registre o protocolo recebido. O módulo verifica a integridade do PDF e guarda uma cópia identificada." Style="{StaticResource Hint}"/>
+     <TextBlock Text="Emissão"/><ComboBox x:Name="EmissionBox" DisplayMemberPath="Label"/>
+     <TextBlock Text="Número do protocolo"/><TextBox x:Name="ProtocolBox"/>
+     <TextBlock Text="Data do protocolo"/><DatePicker x:Name="ProtocolDate" Margin="0,5,0,12"/>
+     <TextBlock Text="Observações / exigências"/><TextBox x:Name="ProtocolNote" AcceptsReturn="True" Height="100" TextWrapping="Wrap"/>
+     <Button Content="Registrar versão protocolada" Click="ProtocolClick" Style="{StaticResource Primary}"/>
+     <TextBlock Text="Registro local. O envio à Prefeitura é realizado pelo profissional." Style="{StaticResource Hint}"/>
+    </StackPanel></ScrollViewer></TabItem>
+    <TabItem Header="Localização"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="Localização DWG" Style="{StaticResource Heading}"/><TextBlock Text="Carregue o mapa, marque um retângulo na vista do Revit e coloque a vista na prancha." Style="{StaticResource Hint}"/>
+     <TextBlock Text="Arquivo selecionado no painel Localização DWG, à direita." Style="{StaticResource Hint}"/>
+     <Button Content="Escolher arquivo DWG…" Click="BrowseDwgClick"/>
+     <TextBlock Text="Unidade do DWG"/><ComboBox x:Name="DwgUnit" SelectedIndex="0"><ComboBoxItem Content="Metros"/><ComboBoxItem Content="Milímetros"/><ComboBoxItem Content="Centímetros"/></ComboBox>
+     <CheckBox x:Name="UnitConfirmed" Content="Conferi a unidade do arquivo DWG."/>
+     <TextBlock Text="Planta de referência para o nível"/><ComboBox x:Name="MapPlan" DisplayMemberPath="Label"/>
+     <TextBlock Text="Escala da localização 1:"/><TextBox x:Name="MapScale" Text="1000"/>
+     <Button Content="1 · Carregar mapa no projeto" Click="ImportMapClick" Style="{StaticResource Primary}"/>
+     <TextBlock x:Name="MapWorkflowStatus" Text="Confira o arquivo e a unidade antes de carregar o mapa." Style="{StaticResource Hint}" TextWrapping="Wrap"/>
+     <TextBlock Text="Vista de localização"/><ComboBox x:Name="MapView" DisplayMemberPath="Name"/>
+     <Button Content="Visualizar mapa no Revit" Click="OpenMapViewClick"/>
+     <Button Content="2 · Marcar retângulo no Revit" Click="CropMapClick" Style="{StaticResource Primary}"/>
+     <Button Content="3 · Selecionar localização nas pranchas" Click="MapToSheetClick"/>
+     <TextBlock Text="O recorte é visual e mantém o DWG original intacto. Usa importação de modelo, oculta nas outras vistas existentes. Confira escala e norte; não realiza geolocalização por endereço." Style="{StaticResource Hint}"/>
+    </StackPanel></ScrollViewer></TabItem>
+<TabItem Header="Resultado"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition/></Grid.RowDefinitions><TextBlock Text="Resultado da rotina" Style="{StaticResource Heading}"/><TextBox x:Name="ReportBox" Grid.Row="1" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#F7FAFE" Text="Escolha uma rotina para começar."/></Grid></TabItem></TabControl>
+    </DockPanel></Border>
+  </Grid>
+  <ScrollViewer x:Name="RightTools" Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,5,7,6">
+   <StackPanel>
+    <Border x:Name="DimensionCard" Style="{StaticResource Card}" Margin="0,0,0,6"><StackPanel>
+     <TextBlock Text="Cotas por vista" Style="{StaticResource CardTitle}"/><TextBlock Text="Escolha a vista" FontSize="11"/><ComboBox x:Name="DimensionView" DisplayMemberPath="Name" SelectionChanged="AnnotationViewChanged"/>
+     <UniformGrid Columns="2"><CheckBox x:Name="OuterCheck" Content="Cotas externas" IsChecked="True"/><CheckBox x:Name="InnerCheck" Content="Cotas internas" IsChecked="True"/><CheckBox x:Name="OpeningCheck" Content="Portas e janelas" IsChecked="True"/><CheckBox x:Name="SetbackCheck" Content="Recuos do lote" ToolTip="Exige limite de terreno com referências nativas utilizáveis. Não verifica os recuos legais exigidos."/></UniformGrid>
+     <Button Content="Varrer vista e propor cotas" Click="ScanDimensionsClick" Style="{StaticResource Primary}" Margin="0,5,0,4"/>
+     <Border Background="#EDF4FB" BorderBrush="#D7E3F0" BorderThickness="1" CornerRadius="3" Padding="5,4" Margin="0,0,0,5"><TextBlock x:Name="DimensionSummary" Text="Prévia: faça a varredura da vista" TextAlignment="Center" FontSize="10"/></Border>
+     <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><Button Content="Revisar propostas" Click="ReviewDimensionsClick" Margin="0,0,5,0" FontSize="11"/><Button x:Name="ApplyDimensionsButton" Grid.Column="1" Content="Aplicar cotas" Click="ApplyDimensionsClick" Style="{StaticResource Primary}" IsEnabled="False" FontSize="11"/></Grid>
+    </StackPanel></Border>
+    <Border x:Name="TagCard" Style="{StaticResource Card}" Margin="0,0,0,6"><StackPanel>
+     <TextBlock Text="Legendas por vista" Style="{StaticResource CardTitle}"/><TextBlock Text="Escolha a vista" FontSize="11"/><ComboBox x:Name="TagView" DisplayMemberPath="Name" SelectionChanged="AnnotationViewChanged"/>
+     <UniformGrid Columns="3"><CheckBox x:Name="RoomCheck" Content="Ambientes" IsChecked="True"/><CheckBox x:Name="WindowDoorCheck" Content="Esquadrias" IsChecked="True"/><CheckBox x:Name="MaterialCheck" Content="Materiais" IsChecked="True"/></UniformGrid>
+     <Button Content="Varrer vista e propor legendas" Click="ScanTagsClick" Style="{StaticResource Primary}" Margin="0,5,0,0"/>
+    </StackPanel></Border>
+    <Border Style="{StaticResource Card}"><StackPanel>
+     <TextBlock Text="Localização DWG" Style="{StaticResource CardTitle}"/>
+     <DockPanel Margin="0,3,0,5"><Button DockPanel.Dock="Right" Content="▰" Click="BrowseDwgClick" ToolTip="Escolher arquivo DWG" Width="28" Padding="0" MinHeight="24"/><TextBlock DockPanel.Dock="Left" Text="Arquivo DWG" VerticalAlignment="Center" FontSize="10" Margin="0,0,6,0"/><TextBox x:Name="DwgBox" Text="C:\Users\Digimax\Documents\Projeto Em Andamento\Mapa Urbano de Mineiros - Atualização 2025.dwg" Padding="3" Margin="0" FontSize="9" Height="24" VerticalContentAlignment="Center" ToolTip="{Binding Text,RelativeSource={RelativeSource Self}}"/></DockPanel>
+     <Border BorderBrush="#D3DCE6" BorderThickness="1" Background="#F6F8FA" Height="110" ClipToBounds="True"><Grid><Image x:Name="MapPreviewImage" Stretch="Uniform"/><TextBlock x:Name="MapPreviewHint" Text="Carregue o DWG para visualizar a localização" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Foreground="#8392A3" TextAlignment="Center" FontSize="11"/></Grid></Border>
+     <Grid Margin="0,6,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><Button Content="Carregar DWG" Click="OpenMapWorkflowClick" Margin="0,0,4,0" Padding="2,4" FontSize="10"/><Button Grid.Column="1" Content="Marcar retângulo" Click="CropMapClick" Margin="0,0,4,0" Padding="2,4" FontSize="10"/><Button Grid.Column="2" Content="Inserir na prancha" Click="MapToSheetClick" Style="{StaticResource Primary}" Padding="2,4" FontSize="10"/></Grid>
+    </StackPanel></Border>
+   </StackPanel>
+  </ScrollViewer>
+ </Grid>
+ <Border Grid.Row="2" Background="White" BorderBrush="#D4DDE7" BorderThickness="0,1,0,0" Padding="16,8,16,4">
+  <Grid><Grid.RowDefinitions><RowDefinition Height="34"/><RowDefinition Height="*"/></Grid.RowDefinitions><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <Border BorderBrush="#BECADB" BorderThickness="1" CornerRadius="4" Padding="8,0" Margin="0,0,12,0"><DockPanel><Button DockPanel.Dock="Right" Content="▰" Click="OpenFolderClick" ToolTip="Abrir pasta do cliente" Width="27" MinHeight="22" Padding="0" BorderThickness="0"/><TextBlock Text="▰   Destino:  " FontWeight="SemiBold" FontSize="11" VerticalAlignment="Center"/><TextBlock x:Name="DestinationLabel" Text="#Projetos\2026\Nome do Cliente" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" FontSize="10" VerticalAlignment="Center"/></DockPanel></Border>
+   <Button Grid.Column="1" Content="Revisar emissão" Click="ReviewNavClick" Width="136" Margin="0,0,8,0"/><Button Grid.Column="2" Content="Emitir todas as pranchas" Click="ExportClick" Style="{StaticResource Primary}" FontWeight="SemiBold" Width="225"/>
+   <DockPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="1,3,0,0"><Button DockPanel.Dock="Right" Content="Ver relatório" Click="ReportClick" BorderThickness="0" MinHeight="16" Padding="3,0" FontSize="10"/><TextBlock DockPanel.Dock="Right" Text="PDF  •  Pasta do cliente  •  Registro do protocolo" FontSize="10" Foreground="#67788C" Margin="10,0,12,0" VerticalAlignment="Center"/><TextBlock x:Name="StatusLabel" Text="Pronto." FontSize="10" Foreground="#67788C" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" VerticalAlignment="Center"/></DockPanel>
+  </Grid>
+ </Border>
+</Grid>
+</Window>

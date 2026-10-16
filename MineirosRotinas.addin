@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>BIM Rotinas Mineiros</Name>
+    <Assembly>C:\Users\Digimax\AppData\Roaming\Autodesk\Revit\Addins\2027\MineirosRotinas\1.1.0-8CA91A6FE1E7\MineirosRotinas.dll</Assembly>
+    <AddInId>8ECCDA40-579A-4DFA-9F2A-257654A59D2F</AddInId>
+    <FullClassName>MineirosRotinas.App</FullClassName>
+    <VendorId>DGMX</VendorId>
+    <VendorDescription>Rotinas independentes de documentacao</VendorDescription>
+    <AllowLoadingIntoExistingSession>Yes</AllowLoadingIntoExistingSession>
+  </AddIn>
+</RevitAddIns>
